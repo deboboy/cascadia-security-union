@@ -1,0 +1,209 @@
+:root {
+    --bg: #f4f6f3;
+    --panel: #ffffff;
+    --ink: #1a2a2a;
+    --muted: #4a5d5a;
+    --primary: #0d6b5e;
+    --primary-strong: #0a534a;
+    --line: #d7e1dd;
+    --accent: #d08b36;
+    --shadow: 0 12px 36px rgba(14, 46, 41, 0.08);
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Avenir Next", "Helvetica Neue", sans-serif;
+    color: var(--ink);
+    background: radial-gradient(circle at 15% 0%, #e7efe9 0%, transparent 45%), var(--bg);
+    line-height: 1.5;
+  }
+  
+  .background-glow {
+    position: fixed;
+    inset: auto -120px -120px auto;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(208, 139, 54, 0.25), transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  .site-header,
+  main,
+  .site-footer {
+    width: min(980px, 92vw);
+    margin: 0 auto;
+  }
+  
+  .site-header {
+    padding: 4.5rem 0 2rem;
+  }
+  
+  .eyebrow {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin: 0 0 0.5rem;
+  }
+  
+  h1 {
+    margin: 0;
+    font-size: clamp(1.9rem, 3vw, 3rem);
+    line-height: 1.15;
+  }
+  
+  .lede {
+    font-size: 1.08rem;
+    color: var(--muted);
+    max-width: 70ch;
+  }
+  
+  .header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.1rem;
+  }
+  
+  .button {
+    display: inline-block;
+    padding: 0.68rem 1rem;
+    border-radius: 0.6rem;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid var(--line);
+  }
+  
+  .button.primary {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  
+  .button.primary:hover {
+    background: var(--primary-strong);
+  }
+  
+  .button.ghost {
+    color: var(--primary-strong);
+    background: #fff;
+  }
+  
+  main {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2.4rem;
+  }
+  
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    padding: 1.2rem;
+    box-shadow: var(--shadow);
+  }
+  
+  h2 {
+    margin: 0 0 0.7rem;
+    font-size: 1.35rem;
+  }
+  
+  h3 {
+    margin: 0.2rem 0 0.3rem;
+    font-size: 1.02rem;
+  }
+  
+  .grid.two {
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  
+  .grid.two article {
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    padding: 0.9rem;
+    background: linear-gradient(180deg, #ffffff, #fbfcfb);
+  }
+
+  .grid.two article:last-child {
+    grid-column: 1 / -1;
+  }
+  
+  .timeline {
+    display: grid;
+    gap: 0.7rem;
+  }
+  
+  .timeline-item {
+    border-left: 3px solid var(--accent);
+    padding: 0.3rem 0 0.3rem 0.75rem;
+  }
+  
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+  
+  .chip {
+    border: 1px solid #cfe0db;
+    background: #f5faf8;
+    border-radius: 999px;
+    padding: 0.45rem 0.75rem;
+    font-weight: 600;
+    color: #1e4f47;
+  }
+  
+  .criteria-list {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  
+  .contact {
+    margin-top: 0.9rem;
+  }
+  
+  .contact a {
+    color: var(--primary-strong);
+  }
+  
+  .faq-item {
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    background: #f8fbfa;
+    border: 1px solid var(--line);
+    border-radius: 0.6rem;
+    padding: 0.7rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .faq-answer {
+    padding: 0.5rem 0.1rem 0.25rem;
+    color: var(--muted);
+  }
+  
+  .site-footer {
+    padding: 0.4rem 0 2rem;
+    color: var(--muted);
+    font-size: 0.93rem;
+  }
+  
+  @media (max-width: 700px) {
+    .site-header {
+      padding-top: 3.1rem;
+    }
+  
+    .panel {
+      padding: 1rem;
+    }
+  }

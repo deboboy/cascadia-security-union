@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cascadia Security Leadership Circle</title>
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-glow" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <p class="eyebrow" data-bind="header.eyebrow"></p>
+      <h1 data-bind="header.title"></h1>
+      <p class="lede" data-bind="header.lede"></p>
+      <div class="header-actions">
+        <a class="button primary" data-bind-href="header.primaryCta.href" data-bind="header.primaryCta.label"></a>
+        <a class="button ghost" data-bind-href="header.secondaryCta.href" data-bind="header.secondaryCta.label"></a>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" id="value">
+        <h2 data-bind="value.title"></h2>
+        <div class="grid two" data-list="value.items" data-template="value-item"></div>
+      </section>
+
+      <section class="panel" id="program">
+        <h2 data-bind="program.title"></h2>
+        <div class="timeline" data-list="program.items" data-template="program-item"></div>
+      </section>
+
+      <section class="panel" id="themes">
+        <h2 data-bind="themes.title"></h2>
+        <div class="chips" id="theme-chips" data-list="themes.items" data-template="theme-chip" aria-live="polite"></div>
+      </section>
+
+      <section class="panel" id="apply">
+        <h2 data-bind="apply.title"></h2>
+        <ul class="criteria-list" data-list="apply.criteria" data-template="criterion"></ul>
+        <p class="contact">
+          <span data-bind="apply.cohortNote"></span><br />
+          <span data-bind="apply.contactLabel"></span>:
+          <a data-bind-mailto="apply.contactEmail" data-bind="apply.contactEmail"></a>
+        </p>
+      </section>
+
+      <section class="panel faq" id="faq">
+        <h2 data-bind="faq.title"></h2>
+        <div data-list="faq.items" data-template="faq-item"></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p data-bind="footer.text"></p>
+    </footer>
+
+    <template id="value-item">
+      <article>
+        <h3 data-field="title"></h3>
+        <p data-field="body"></p>
+      </article>
+    </template>
+
+    <template id="program-item">
+      <div class="timeline-item">
+        <h3 data-field="title"></h3>
+        <p data-field="body"></p>
+      </div>
+    </template>
+
+    <template id="theme-chip">
+      <span class="chip" data-field="."></span>
+    </template>
+
+    <template id="criterion">
+      <li data-field="."></li>
+    </template>
+
+    <template id="faq-item">
+      <button class="faq-item" type="button" aria-expanded="false">
+        <span data-field="question"></span>
+      </button>
+      <div class="faq-answer" hidden data-field="answer"></div>
+    </template>
+
+    <script src="content.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
