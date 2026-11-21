@@ -17,7 +17,7 @@ window.SITE_CONTENT = {
     title: "Cascadia Security Leadership Circle",
     lede:
       "A peer community that organizes nonprofit leaders to develop strategies and operational playbooks for the cybersecurity threats nonprofits face today—and the ones coming next.",
-    primaryCta: { label: "Request Founding Invite", href: "#apply" },
+    primaryCta: { label: "Request Founding Invite", href: "#invite" },
     secondaryCta: { label: "View Program Model", href: "#program" },
   },
 
@@ -86,8 +86,21 @@ window.SITE_CONTENT = {
       "Commitment to confidentiality and active participation in-person and online",
     ],
     cohortNote: "Founding cohort target: 20-30 nonprofit leaders.",
-    contactEmail: "founders@cascadiasecuritycircle.org",
-    contactLabel: "Contact",
+  },
+
+  invite: {
+    title: "Request a founding invite",
+    lede: "Share a few details and we will follow up with next steps for the founding cohort.",
+    fields: {
+      name: "Full name",
+      email: "Work email",
+      organization: "Nonprofit / organization",
+      role: "Role / title",
+      notes: "What cybersecurity challenges are most pressing for your organization? (optional)",
+    },
+    submitLabel: "Submit request",
+    successMessage: "Thanks — your request was received. We will be in touch soon.",
+    errorMessage: "Something went wrong sending your request. Please try again in a moment.",
   },
 
   faq: {

@@ -39,11 +39,52 @@
       <section class="panel" id="apply">
         <h2 data-bind="apply.title"></h2>
         <ul class="criteria-list" data-list="apply.criteria" data-template="criterion"></ul>
-        <p class="contact">
-          <span data-bind="apply.cohortNote"></span><br />
-          <span data-bind="apply.contactLabel"></span>:
-          <a data-bind-mailto="apply.contactEmail" data-bind="apply.contactEmail"></a>
-        </p>
+        <p class="contact" data-bind="apply.cohortNote"></p>
+
+        <div class="invite" id="invite">
+          <h3 data-bind="invite.title"></h3>
+          <p class="invite-lede" data-bind="invite.lede"></p>
+
+          <form class="invite-form" id="invite-form" novalidate>
+            <div class="form-row">
+              <label for="invite-name">
+                <span data-bind="invite.fields.name"></span>
+                <input id="invite-name" name="name" type="text" autocomplete="name" required maxlength="120" />
+              </label>
+              <label for="invite-email">
+                <span data-bind="invite.fields.email"></span>
+                <input id="invite-email" name="email" type="email" autocomplete="email" required maxlength="200" />
+              </label>
+            </div>
+
+            <div class="form-row">
+              <label for="invite-organization">
+                <span data-bind="invite.fields.organization"></span>
+                <input id="invite-organization" name="organization" type="text" autocomplete="organization" required maxlength="200" />
+              </label>
+              <label for="invite-role">
+                <span data-bind="invite.fields.role"></span>
+                <input id="invite-role" name="role" type="text" autocomplete="organization-title" required maxlength="120" />
+              </label>
+            </div>
+
+            <label for="invite-notes">
+              <span data-bind="invite.fields.notes"></span>
+              <textarea id="invite-notes" name="notes" rows="4" maxlength="1000"></textarea>
+            </label>
+
+            <!-- Honeypot: leave empty -->
+            <label class="hp" for="invite-company" aria-hidden="true">
+              Company
+              <input id="invite-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+            </label>
+
+            <div class="form-actions">
+              <button class="button primary" type="submit" data-bind="invite.submitLabel"></button>
+              <p class="form-status" id="invite-status" role="status" aria-live="polite" hidden></p>
+            </div>
+          </form>
+        </div>
       </section>
 
       <section class="panel faq" id="faq">

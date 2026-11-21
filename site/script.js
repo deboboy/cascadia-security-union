@@ -73,4 +73,69 @@
       answer.hidden = expanded;
     });
   });
+
+  // Founding invite form → /api/invite → Discord
+  const inviteForm = document.getElementById("invite-form");
+  const inviteStatus = document.getElementById("invite-status");
+  const inviteCopy = content.invite || {};
+
+  function showInviteStatus(message, kind) {
+    if (!inviteStatus) return;
+    inviteStatus.hidden = false;
+    inviteStatus.textContent = message;
+    inviteStatus.classList.remove("is-success", "is-error");
+    if (kind) inviteStatus.classList.add(kind);
+  }
+
+  if (inviteForm) {
+    inviteForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const submitButton = inviteForm.querySelector('button[type="submit"]');
+      const formData = new FormData(inviteForm);
+      const payload = {
+        name: String(formData.get("name") || "").trim(),
+        email: String(formData.get("email") || "").trim(),
+        organization: String(formData.get("organization") || "").trim(),
+        role: String(formData.get("role") || "").trim(),
+        notes: String(formData.get("notes") || "").trim(),
+        company: String(formData.get("company") || "").trim(),
+      };
+
+      if (!payload.name || !payload.email || !payload.organization || !payload.role) {
+        showInviteStatus("Please fill in name, email, organization, and role.", "is-error");
+        return;
+      }
+
+      if (submitButton) submitButton.disabled = true;
+      showInviteStatus("Sending your request…");
+
+      try {
+        const response = await fetch("/api/invite", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          throw new Error(result.error || inviteCopy.errorMessage || "Request failed.");
+        }
+
+        inviteForm.reset();
+        showInviteStatus(
+          inviteCopy.successMessage || "Thanks — your request was received.",
+          "is-success"
+        );
+      } catch (err) {
+        showInviteStatus(
+          err.message || inviteCopy.errorMessage || "Something went wrong.",
+          "is-error"
+        );
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
+    });
+  }
 })();

@@ -81,11 +81,24 @@ Also updated:
 - Root `vercel.json` — `outputDirectory: "site"` so Vercel serves the microsite from the nested folder
 - This `SESSION_SUMMARY.md` — captured Nov 20–21 progress and the restructure
 
+### Later the same day — founding invite form → Discord
+
+Replaced the public email contact with a lightweight invite form and shipped it to `main`:
+
+- Form fields: name, work email, organization, role, optional notes (+ honeypot)
+- Client posts to `/api/invite` (`api/invite.js`)
+- Vercel serverless function validates input and posts an embed to `DISCORD_WEBHOOK_URL`
+- Webhook URL stays server-side (env var); setup steps + `.env.example` documented in `README.md`
+- Primary CTA now targets `#invite`
+
+**Still needed from you:** create the Discord channel webhook, set `DISCORD_WEBHOOK_URL` on the Vercel project, confirm redeploy, then send a test submission.
+
 ### Open follow-ups
 
+- Add Discord webhook env var on Vercel and verify a test submission
 - Align `docs/CHARTER.md`, `docs/PROGRAM_BLUEPRINT.md`, `docs/LAUNCH_PLAN.md` with the nonprofit focus (docs still partly reflect the earlier CISO/CSO framing)
 - Clean up or replace the noisy draft text in `docs/PRD.md`
-- Confirm contact email / brand domain before wider outreach
+- Confirm brand domain before wider outreach
 - Optional: custom domain on Vercel
 
 ---

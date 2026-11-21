@@ -46,6 +46,30 @@ Open [http://localhost:8080](http://localhost:8080).
 - `docs/LAUNCH_PLAN.md` — 90-day kickoff checklist
 - `docs/SESSION_SUMMARY.md` — progress log across working sessions
 
+## Founding invite form → Discord
+
+The **Request Founding Invite** CTA scrolls to a form in `site/`. Submissions POST to `/api/invite`, which forwards an embed to a Discord channel webhook.
+
+### One-time Discord setup
+
+1. Create a channel (for example `#founding-invites`).
+2. Channel settings → **Integrations** → **Webhooks** → **New Webhook**.
+3. Name it something like `Cascadia Invite Form`, copy the webhook URL.
+4. Add it to the Vercel project as a production env var:
+
+```bash
+vercel env add DISCORD_WEBHOOK_URL production --scope last-myle
+# paste the webhook URL when prompted
+```
+
+5. Redeploy so the function picks up the secret:
+
+```bash
+vercel deploy --prod --yes --scope last-myle
+```
+
+Do not put the webhook URL in client code or commit it. Use `.env.example` as a local reference only.
+
 ## Live
 
 - Site: https://cascadia-security-union.vercel.app
