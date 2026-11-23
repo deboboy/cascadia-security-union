@@ -1,8 +1,8 @@
-# Community Charter: Cascadia Security Leadership Circle
+# Community Charter: Cascadia Security Leadership Council
 
 ## 1) Purpose
 
-The Cascadia Security Leadership Circle exists to help Seattle-area security executives solve strategic security challenges through trusted peer exchange, practical collaboration, and selective expert input.
+The Cascadia Security Leadership Council exists to help Seattle-area security executives solve strategic security challenges through trusted peer exchange, practical collaboration, and selective expert input.
 
 This is a leadership community, not a vendor event series.
 

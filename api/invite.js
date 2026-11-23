@@ -98,7 +98,7 @@ module.exports = async function handler(req, res) {
     content: "New founding invite request",
     embeds: [
       {
-        title: "Cascadia Security Leadership Circle",
+        title: "Cascadia Security Leadership Council",
         color: 0x0d6b5e,
         fields,
         timestamp: new Date().toISOString(),

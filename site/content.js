@@ -1,5 +1,5 @@
 /**
- * Cascadia Security Leadership Circle — site content
+ * Cascadia Security Leadership Council — site content
  *
  * Edit this file to change what the site says.
  * Leave structure (arrays, keys) intact; only change the string values
@@ -7,14 +7,14 @@
  */
 window.SITE_CONTENT = {
   meta: {
-    title: "Cascadia Security Leadership Circle",
+    title: "Cascadia Security Leadership Council",
     description:
       "A Seattle-area peer community for nonprofit leaders building strategies and operational playbooks for current and future cybersecurity threats.",
   },
 
   header: {
     eyebrow: "Seattle + Online · Nonprofit Focus",
-    title: "Cascadia Security Leadership Circle",
+    title: "Cascadia Security Leadership Council",
     lede:
       "A peer community that organizes nonprofit leaders to develop strategies and operational playbooks for the cybersecurity threats nonprofits face today—and the ones coming next.",
     primaryCta: { label: "Request Founding Invite", href: "#invite" },
@@ -26,7 +26,7 @@ window.SITE_CONTENT = {
     items: [
       {
         title: "Built for nonprofit realities",
-        body: "Nonprofits face the same threat landscape as enterprises, often with leaner teams, tighter budgets, and mission-critical data about vulnerable communities. This circle is designed around those constraints—not enterprise playbooks that do not fit.",
+        body: "Nonprofits face the same threat landscape as enterprises, often with leaner teams, tighter budgets, and mission-critical data about vulnerable communities. This council is designed around those constraints—not enterprise playbooks that do not fit.",
       },
       {
         title: "Strategies and playbooks, not theory",

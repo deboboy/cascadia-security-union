@@ -1,4 +1,4 @@
-# Cascadia Security Leadership Circle
+# Cascadia Security Leadership Council
 
 Seattle-area peer community for nonprofit leaders building cybersecurity strategies and operational playbooks — with a static recruiting site and planning docs.
 

@@ -1,4 +1,4 @@
-# Session Summary — Cascadia Security Leadership Circle
+# Session Summary — Cascadia Security Leadership Council
 
 Progress log for building the community concept, site, and launch packaging.
 
@@ -42,7 +42,7 @@ Make site copy easy to edit, narrow the community to nonprofit cybersecurity rea
    - Added `README.md` with edit and local-preview instructions
 
 2. **Strategic narrowing**
-   - Repositioned Cascadia Security Leadership Circle for **nonprofit leaders**
+   - Repositioned Cascadia Security Leadership Council (then still named Circle) for **nonprofit leaders**
    - Core mission: develop **strategies and operational playbooks** for current and future cybersecurity threats
    - Updated value props, program labels, year-one themes, membership criteria, and FAQ accordingly
 
@@ -59,7 +59,7 @@ Make site copy easy to edit, narrow the community to nonprofit cybersecurity rea
 
 | Dimension | Current state |
 | --- | --- |
-| Name | Cascadia Security Leadership Circle |
+| Name | Cascadia Security Leadership Council |
 | Audience | Nonprofit executives / ops / IT / security leaders |
 | Offer | Peer strategies + operational playbooks for cyber threats |
 | Geography | Seattle-area in person + online |
@@ -92,6 +92,12 @@ Replaced the public email contact with a lightweight invite form and shipped it 
 - Primary CTA now targets `#invite`
 
 **Still needed from you:** create the Discord channel webhook, set `DISCORD_WEBHOOK_URL` on the Vercel project, confirm redeploy, then send a test submission.
+
+---
+
+## 2026-11-23 — Rename to Council
+
+Renamed the community from **Cascadia Security Leadership Circle** to **Cascadia Security Leadership Council** across site copy, API Discord embed title, README, charter, PRD, and this summary. CSS `radial-gradient(circle…)` values left unchanged (not branding).
 
 ### Open follow-ups
 
