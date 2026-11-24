@@ -48,27 +48,36 @@ Open [http://localhost:8080](http://localhost:8080).
 
 ## Founding invite form → Discord
 
-The **Request Founding Invite** CTA scrolls to a form in `site/`. Submissions POST to `/api/invite`, which forwards an embed to a Discord channel webhook.
+The **Request Founding Invite** CTA scrolls to a form in `site/`. The browser fetches signed session tokens from `GET /api/invite`, then submissions `POST` to the same route, which validates input and forwards an embed to a Discord channel webhook.
 
-### One-time Discord setup
+Bot resistance (Vercel serverless, no Express): honeypot, HMAC-signed timing token (min ~4s fill), math challenge, field limits, Discord mention escaping, and best-effort per-instance rate limiting (5 posts / 15 min / IP).
+
+### One-time Discord + signing setup
 
 1. Create a channel (for example `#founding-invites`).
 2. Channel settings → **Integrations** → **Webhooks** → **New Webhook**.
 3. Name it something like `Cascadia Invite Form`, copy the webhook URL.
-4. Add it to the Vercel project as a production env var:
+4. Add production env vars on the Vercel project:
 
 ```bash
 vercel env add DISCORD_WEBHOOK_URL production --scope last-myle
 # paste the webhook URL when prompted
+
+vercel env add FORM_SIGNING_SECRET production --scope last-myle
+# paste output of: openssl rand -hex 32
 ```
 
-5. Redeploy so the function picks up the secret:
+5. Redeploy so the function picks up the secrets:
 
 ```bash
 vercel deploy --prod --yes --scope last-myle
 ```
 
-Do not put the webhook URL in client code or commit it. Use `.env.example` as a local reference only.
+Do not put secrets in client code or commit them. Use `.env.example` as a local reference only.
+
+### Analytics
+
+Vercel Web Analytics is wired via script tags in `site/index.html`. Enable **Web Analytics** for the project in the Vercel dashboard, then redeploy so `/_vercel/insights/*` is available.
 
 ## Live
 

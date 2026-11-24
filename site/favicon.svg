@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cascadia Security Leadership Council">
+  <rect width="64" height="64" rx="12" fill="#0D6B5E"/>
+  <path
+    fill="#F4F6F3"
+    d="M32 8c-1.2 0-2.3.4-3.2 1.1L14 21.2c-.9.7-1.4 1.8-1.4 2.9v14.2c0 8.6 6.4 16.5 15.6 20.3.9.4 2 .4 2.9 0C40 54.8 46.4 46.9 46.4 38.3V24.1c0-1.1-.5-2.2-1.4-2.9L35.2 9.1C34.3 8.4 33.2 8 32 8z"
+  />
+  <path
+    fill="#0D6B5E"
+    d="M20.5 26.5 32 17.8l11.5 8.7v3.2L32 22.8 20.5 29.7v-3.2z"
+  />
+  <circle cx="32" cy="38" r="5.5" fill="none" stroke="#D08B36" stroke-width="2.5"/>
+  <rect x="30.4" y="33.2" width="3.2" height="4.2" rx="1" fill="#D08B36"/>
+</svg>

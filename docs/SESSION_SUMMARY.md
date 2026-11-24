@@ -99,9 +99,30 @@ Replaced the public email contact with a lightweight invite form and shipped it 
 
 Renamed the community from **Cascadia Security Leadership Circle** to **Cascadia Security Leadership Council** across site copy, API Discord embed title, README, charter, PRD, and this summary. CSS `radial-gradient(circle…)` values left unchanged (not branding).
 
+### Later the same day — favicon + Open Graph
+
+- Added brand icon assets: `site/icon.png`, `favicon.svg`, `favicon-16/32.png`, `apple-touch-icon.png`
+- Added `site/og-image.png` social card
+- Wired favicon links plus static `og:*` / `twitter:*` meta in `site/index.html` (crawlers do not run JS)
+- Site URL/image also mirrored in `content.js` / `script.js` for runtime updates
+
+### Later the same day — local folder rename
+
+Renamed the local project directory to `cascadia-security-leadership-council` to match the community name. GitHub repo and Vercel project slugs remain `cascadia-security-union` for now (live URL unchanged).
+
+### Later the same day — analytics + invite form hardening
+
+- **Vercel Web Analytics:** script tags in `site/index.html` (static HTML path; no `@vercel/analytics` / Next.js). Enable Analytics in the Vercel dashboard, then redeploy.
+- **Invite bot resistance** adapted from Codex Express scaffold to existing `api/invite.js` + static form (kept Discord webhook delivery; skipped Express/Helmet packages and NDJSON file storage):
+  - `GET /api/invite` issues HMAC-signed form + math-challenge tokens (`FORM_SIGNING_SECRET`)
+  - `POST` enforces honeypot, field limits, timing window (~4s–1h), challenge answer, IP-bound tokens, and best-effort per-instance rate limit (5 / 15 min)
+  - Client loads session tokens on page load and refreshes after submit
+  - Security headers via `vercel.json`; README + `.env.example` document both secrets
+
 ### Open follow-ups
 
-- Add Discord webhook env var on Vercel and verify a test submission
+- Confirm `DISCORD_WEBHOOK_URL` and `FORM_SIGNING_SECRET` are set on Vercel production, redeploy, and verify a test submission
+- Enable Web Analytics in the Vercel project dashboard if not already on
 - Align `docs/CHARTER.md`, `docs/PROGRAM_BLUEPRINT.md`, `docs/LAUNCH_PLAN.md` with the nonprofit focus (docs still partly reflect the earlier CISO/CSO framing)
 - Clean up or replace the noisy draft text in `docs/PRD.md`
 - Confirm brand domain before wider outreach

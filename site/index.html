@@ -4,7 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cascadia Security Leadership Council</title>
-    <meta name="description" content="" />
+    <meta
+      name="description"
+      content="A Seattle-area peer community for nonprofit leaders building strategies and operational playbooks for current and future cybersecurity threats."
+    />
+
+    <link rel="canonical" href="https://cascadia-security-union.vercel.app/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Cascadia Security Leadership Council" />
+    <meta property="og:title" content="Cascadia Security Leadership Council" />
+    <meta
+      property="og:description"
+      content="A Seattle-area peer community for nonprofit leaders building strategies and operational playbooks for current and future cybersecurity threats."
+    />
+    <meta property="og:url" content="https://cascadia-security-union.vercel.app/" />
+    <meta property="og:image" content="https://cascadia-security-union.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta property="og:image:alt" content="Cascadia Security Leadership Council — nonprofit cybersecurity strategies and playbooks" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cascadia Security Leadership Council" />
+    <meta
+      name="twitter:description"
+      content="A Seattle-area peer community for nonprofit leaders building strategies and operational playbooks for current and future cybersecurity threats."
+    />
+    <meta name="twitter:image" content="https://cascadia-security-union.vercel.app/og-image.png" />
+
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -73,6 +104,22 @@
               <textarea id="invite-notes" name="notes" rows="4" maxlength="1000"></textarea>
             </label>
 
+            <label for="invite-challenge" class="invite-challenge">
+              <span id="invite-challenge-label" data-bind="invite.fields.challenge"></span>
+              <input
+                id="invite-challenge"
+                name="challenge_answer"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                required
+                maxlength="16"
+              />
+            </label>
+
+            <input type="hidden" name="form_token" id="invite-form-token" value="" />
+            <input type="hidden" name="challenge_token" id="invite-challenge-token" value="" />
+
             <!-- Honeypot: leave empty -->
             <label class="hp" for="invite-company" aria-hidden="true">
               Company
@@ -128,5 +175,9 @@
 
     <script src="content.js"></script>
     <script src="script.js"></script>
+    <script>
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
   </body>
 </html>
