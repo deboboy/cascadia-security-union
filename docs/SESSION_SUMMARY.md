@@ -123,8 +123,13 @@ Renamed the local project directory to `cascadia-security-leadership-council` to
 
 Custom domain live: **https://www.cascadiasecurity.org/** (Vercel project still `cascadia-security-union`). Canonical, Open Graph, Twitter image, and `content.js` meta URLs updated to the custom domain; README lists it as the primary site URL.
 
+### Later the same day — Cloudflare Turnstile
+
+Replaced the math challenge with **Cloudflare Turnstile**: widget on the invite form, server-side `siteverify` in `api/invite.js` using `TURNSTILE_SECRET_KEY`. Kept honeypot, signed timing token, and rate limiting. Site key is public in the page; secret stays in env only.
+
 ### Open follow-ups
 
+- Confirm `TURNSTILE_SECRET_KEY` is set on Vercel production and redeploy after this change
 - Align `docs/CHARTER.md`, `docs/PROGRAM_BLUEPRINT.md`, `docs/LAUNCH_PLAN.md` with the nonprofit focus (docs still partly reflect the earlier CISO/CSO framing)
 - Clean up or replace the noisy draft text in `docs/PRD.md`
 - Optional: redirect apex `cascadiasecurity.org` → `www` if not already configured in Vercel/DNS

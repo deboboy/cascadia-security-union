@@ -90,10 +90,12 @@
   const inviteForm = document.getElementById("invite-form");
   const inviteStatus = document.getElementById("invite-status");
   const inviteCopy = content.invite || {};
-  const challengeLabel = document.getElementById("invite-challenge-label");
   const formTokenInput = document.getElementById("invite-form-token");
-  const challengeTokenInput = document.getElementById("invite-challenge-token");
-  const challengeBaseLabel = inviteCopy.fields?.challenge || "Quick check (helps reduce spam)";
+  const turnstileEl = document.getElementById("invite-turnstile");
+
+  if (turnstileEl && inviteCopy.turnstileSiteKey) {
+    turnstileEl.setAttribute("data-sitekey", inviteCopy.turnstileSiteKey);
+  }
 
   function showInviteStatus(message, kind) {
     if (!inviteStatus) return;
@@ -103,28 +105,27 @@
     if (kind) inviteStatus.classList.add(kind);
   }
 
+  function resetTurnstile() {
+    if (window.turnstile && typeof window.turnstile.reset === "function") {
+      window.turnstile.reset();
+    }
+  }
+
   async function loadInviteSession() {
-    if (!inviteForm || !formTokenInput || !challengeTokenInput) return false;
+    if (!inviteForm || !formTokenInput) return false;
 
     try {
       const response = await fetch("/api/invite", { method: "GET", cache: "no-store" });
       const data = await response.json().catch(() => ({}));
 
-      if (!response.ok || !data.formToken || !data.challengeToken) {
+      if (!response.ok || !data.formToken) {
         throw new Error(data.error || inviteCopy.sessionErrorMessage || "Session failed.");
       }
 
       formTokenInput.value = data.formToken;
-      challengeTokenInput.value = data.challengeToken;
-      if (challengeLabel) {
-        challengeLabel.textContent = data.challengeQuestion
-          ? `${challengeBaseLabel}: ${data.challengeQuestion}`
-          : challengeBaseLabel;
-      }
       return true;
     } catch (err) {
       formTokenInput.value = "";
-      challengeTokenInput.value = "";
       showInviteStatus(
         err.message || inviteCopy.sessionErrorMessage || "Could not prepare the form.",
         "is-error"
@@ -148,9 +149,8 @@
         role: String(formData.get("role") || "").trim(),
         notes: String(formData.get("notes") || "").trim(),
         company: String(formData.get("company") || "").trim(),
-        challenge_answer: String(formData.get("challenge_answer") || "").trim(),
         form_token: String(formData.get("form_token") || "").trim(),
-        challenge_token: String(formData.get("challenge_token") || "").trim(),
+        "cf-turnstile-response": String(formData.get("cf-turnstile-response") || "").trim(),
       };
 
       if (!payload.name || !payload.email || !payload.organization || !payload.role) {
@@ -158,9 +158,20 @@
         return;
       }
 
-      if (!payload.challenge_answer || !payload.form_token || !payload.challenge_token) {
-        showInviteStatus("Please complete the quick check, then try again.", "is-error");
+      if (!payload.form_token) {
+        showInviteStatus(
+          inviteCopy.sessionErrorMessage || "Could not prepare the form. Please refresh.",
+          "is-error"
+        );
         await loadInviteSession();
+        return;
+      }
+
+      if (!payload["cf-turnstile-response"]) {
+        showInviteStatus(
+          inviteCopy.turnstileErrorMessage || "Please complete the security check, then try again.",
+          "is-error"
+        );
         return;
       }
 
@@ -181,12 +192,14 @@
         }
 
         inviteForm.reset();
+        resetTurnstile();
         showInviteStatus(
           inviteCopy.successMessage || "Thanks — your request was received.",
           "is-success"
         );
         await loadInviteSession();
       } catch (err) {
+        resetTurnstile();
         showInviteStatus(
           err.message || inviteCopy.errorMessage || "Something went wrong.",
           "is-error"

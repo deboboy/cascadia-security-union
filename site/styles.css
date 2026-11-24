@@ -223,6 +223,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .cf-turnstile {
+    margin: 0.15rem 0 0.25rem;
+  }
+
   .form-actions {
     display: flex;
     flex-wrap: wrap;

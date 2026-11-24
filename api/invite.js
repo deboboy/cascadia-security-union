@@ -6,12 +6,20 @@ const MAX = {
   organization: 200,
   role: 120,
   notes: 1000,
+  turnstile: 2048,
 };
 
 const MIN_FORM_FILL_MS = 4000;
 const MAX_FORM_FILL_MS = 60 * 60 * 1000;
 const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
 const RATE_LIMIT_MAX = 5;
+
+const TURNSTILE_HOSTNAMES = new Set([
+  "www.cascadiasecurity.org",
+  "cascadiasecurity.org",
+  "cascadia-security-union.vercel.app",
+  "localhost",
+]);
 
 /** Best-effort per-instance limiter (serverless instances do not share memory). */
 const rateBuckets = new Map();
@@ -50,6 +58,10 @@ function hashIp(ip) {
 
 function signingSecret() {
   return process.env.FORM_SIGNING_SECRET || "";
+}
+
+function turnstileSecret() {
+  return process.env.TURNSTILE_SECRET_KEY || "";
 }
 
 function toBase64Url(input) {
@@ -98,18 +110,8 @@ function verifyToken(token) {
 function issueFormContext(req) {
   const now = Date.now();
   const ipHash = hashIp(clientIp(req));
-  const a = crypto.randomInt(2, 10);
-  const b = crypto.randomInt(2, 10);
-
   return {
     formToken: signPayload({ iat: now, ipHash, purpose: "invite-form" }),
-    challengeToken: signPayload({
-      iat: now,
-      ipHash,
-      expected: a + b,
-      purpose: "invite-challenge",
-    }),
-    challengeQuestion: `${a} + ${b} = ?`,
   };
 }
 
@@ -153,6 +155,39 @@ function parseBody(req) {
   return { body };
 }
 
+async function verifyTurnstile(token, ip) {
+  const secret = turnstileSecret();
+  if (!secret || !token) return { ok: false };
+
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret,
+        response: token,
+        remoteip: ip,
+      }),
+    });
+
+    const result = await response.json();
+    if (!result.success) {
+      console.error("Turnstile siteverify failed", result["error-codes"] || result);
+      return { ok: false };
+    }
+
+    if (result.hostname && !TURNSTILE_HOSTNAMES.has(result.hostname)) {
+      console.error("Turnstile hostname rejected", result.hostname);
+      return { ok: false };
+    }
+
+    return { ok: true };
+  } catch (err) {
+    console.error("Turnstile siteverify error", err);
+    return { ok: false };
+  }
+}
+
 function handleOptions(res) {
   res.statusCode = 204;
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
@@ -161,7 +196,7 @@ function handleOptions(res) {
 }
 
 function handleGet(req, res) {
-  if (!signingSecret()) {
+  if (!signingSecret() || !turnstileSecret()) {
     json(res, 503, { error: "Invite intake is not configured yet." });
     return;
   }
@@ -170,12 +205,13 @@ function handleGet(req, res) {
 
 async function handlePost(req, res) {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-  if (!webhookUrl || !signingSecret()) {
+  if (!webhookUrl || !signingSecret() || !turnstileSecret()) {
     json(res, 503, { error: "Invite intake is not configured yet." });
     return;
   }
 
-  const ipHash = hashIp(clientIp(req));
+  const ip = clientIp(req);
+  const ipHash = hashIp(ip);
   const limited = checkRateLimit(ipHash);
   if (!limited.allowed) {
     res.setHeader("Retry-After", String(limited.retryAfterSec));
@@ -201,7 +237,10 @@ async function handlePost(req, res) {
   const organization = clean(body.organization, MAX.organization);
   const role = clean(body.role, MAX.role);
   const notes = clean(body.notes, MAX.notes);
-  const challengeAnswer = clean(body.challenge_answer, 16);
+  const turnstileToken = clean(
+    body["cf-turnstile-response"] || body.turnstileToken || "",
+    MAX.turnstile
+  );
 
   if (!name || !email || !organization || !role) {
     json(res, 400, { error: "Name, email, organization, and role are required." });
@@ -227,16 +266,9 @@ async function handlePost(req, res) {
     return;
   }
 
-  const challengeToken = verifyToken(body.challenge_token);
-  const numericAnswer = Number.parseInt(challengeAnswer, 10);
-  if (
-    !challengeToken ||
-    challengeToken.purpose !== "invite-challenge" ||
-    challengeToken.ipHash !== ipHash ||
-    !Number.isFinite(numericAnswer) ||
-    numericAnswer !== challengeToken.expected
-  ) {
-    json(res, 400, { error: "Anti-bot check failed. Please try again." });
+  const turnstile = await verifyTurnstile(turnstileToken, ip);
+  if (!turnstile.ok) {
+    json(res, 400, { error: "Security check failed. Please try again." });
     return;
   }
 

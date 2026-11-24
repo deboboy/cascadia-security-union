@@ -104,21 +104,14 @@
               <textarea id="invite-notes" name="notes" rows="4" maxlength="1000"></textarea>
             </label>
 
-            <label for="invite-challenge" class="invite-challenge">
-              <span id="invite-challenge-label" data-bind="invite.fields.challenge"></span>
-              <input
-                id="invite-challenge"
-                name="challenge_answer"
-                type="text"
-                inputmode="numeric"
-                autocomplete="off"
-                required
-                maxlength="16"
-              />
-            </label>
-
             <input type="hidden" name="form_token" id="invite-form-token" value="" />
-            <input type="hidden" name="challenge_token" id="invite-challenge-token" value="" />
+
+            <div
+              class="cf-turnstile"
+              id="invite-turnstile"
+              data-sitekey="0x4AAAAAAFjWYyBYlaY-3qPD"
+              data-theme="light"
+            ></div>
 
             <!-- Honeypot: leave empty -->
             <label class="hp" for="invite-company" aria-hidden="true">
@@ -175,6 +168,7 @@
 
     <script src="content.js"></script>
     <script src="script.js"></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
     </script>

@@ -101,12 +101,13 @@ window.SITE_CONTENT = {
       organization: "Nonprofit / organization",
       role: "Role / title",
       notes: "What cybersecurity challenges are most pressing for your organization? (optional)",
-      challenge: "Quick check (helps reduce spam)",
     },
+    turnstileSiteKey: "0x4AAAAAAFjWYyBYlaY-3qPD",
     submitLabel: "Submit request",
     successMessage: "Thanks — your request was received. We will be in touch soon.",
     errorMessage: "Something went wrong sending your request. Please try again in a moment.",
     sessionErrorMessage: "Could not prepare the form. Please refresh and try again.",
+    turnstileErrorMessage: "Please complete the security check, then try again.",
   },
 
   faq: {

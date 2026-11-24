@@ -50,14 +50,15 @@ Open [http://localhost:8080](http://localhost:8080).
 
 The **Request Founding Invite** CTA scrolls to a form in `site/`. The browser fetches signed session tokens from `GET /api/invite`, then submissions `POST` to the same route, which validates input and forwards an embed to a Discord channel webhook.
 
-Bot resistance (Vercel serverless, no Express): honeypot, HMAC-signed timing token (min ~4s fill), math challenge, field limits, Discord mention escaping, and best-effort per-instance rate limiting (5 posts / 15 min / IP).
+Bot resistance (Vercel serverless, no Express): Cloudflare Turnstile (server-side `siteverify`), honeypot, HMAC-signed timing token (min ~4s fill), field limits, Discord mention escaping, and best-effort per-instance rate limiting (5 posts / 15 min / IP).
 
-### One-time Discord + signing setup
+### One-time Discord + secrets setup
 
 1. Create a channel (for example `#founding-invites`).
 2. Channel settings → **Integrations** → **Webhooks** → **New Webhook**.
 3. Name it something like `Cascadia Invite Form`, copy the webhook URL.
-4. Add production env vars on the Vercel project:
+4. Create a Turnstile widget in Cloudflare for `www.cascadiasecurity.org` (and any preview hosts you need).
+5. Add production env vars on the Vercel project:
 
 ```bash
 vercel env add DISCORD_WEBHOOK_URL production --scope last-myle
@@ -65,15 +66,18 @@ vercel env add DISCORD_WEBHOOK_URL production --scope last-myle
 
 vercel env add FORM_SIGNING_SECRET production --scope last-myle
 # paste output of: openssl rand -hex 32
+
+vercel env add TURNSTILE_SECRET_KEY production --scope last-myle
+# paste the Turnstile secret key (not the site key)
 ```
 
-5. Redeploy so the function picks up the secrets:
+6. Redeploy so the function picks up the secrets:
 
 ```bash
 vercel deploy --prod --yes --scope last-myle
 ```
 
-Do not put secrets in client code or commit them. Use `.env.example` as a local reference only.
+The Turnstile **site key** is public and lives in `site/index.html` / `site/content.js`. Do not put the Turnstile **secret**, Discord webhook, or form signing secret in client code or git. Use `.env.example` as a local reference only.
 
 ### Analytics
 
