@@ -119,14 +119,15 @@ Renamed the local project directory to `cascadia-security-leadership-council` to
   - Client loads session tokens on page load and refreshes after submit
   - Security headers via `vercel.json`; README + `.env.example` document both secrets
 
+### Later the same day — custom domain
+
+Custom domain live: **https://www.cascadiasecurity.org/** (Vercel project still `cascadia-security-union`). Canonical, Open Graph, Twitter image, and `content.js` meta URLs updated to the custom domain; README lists it as the primary site URL.
+
 ### Open follow-ups
 
-- Confirm `DISCORD_WEBHOOK_URL` and `FORM_SIGNING_SECRET` are set on Vercel production, redeploy, and verify a test submission
-- Enable Web Analytics in the Vercel project dashboard if not already on
 - Align `docs/CHARTER.md`, `docs/PROGRAM_BLUEPRINT.md`, `docs/LAUNCH_PLAN.md` with the nonprofit focus (docs still partly reflect the earlier CISO/CSO framing)
 - Clean up or replace the noisy draft text in `docs/PRD.md`
-- Confirm brand domain before wider outreach
-- Optional: custom domain on Vercel
+- Optional: redirect apex `cascadiasecurity.org` → `www` if not already configured in Vercel/DNS
 
 ---
 

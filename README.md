@@ -81,5 +81,6 @@ Vercel Web Analytics is wired via script tags in `site/index.html`. Enable **Web
 
 ## Live
 
-- Site: https://cascadia-security-union.vercel.app
+- Site: https://www.cascadiasecurity.org/
+- Vercel alias: https://cascadia-security-union.vercel.app
 - Repo: https://github.com/deboboy/cascadia-security-union

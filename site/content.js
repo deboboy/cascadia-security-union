@@ -10,8 +10,8 @@ window.SITE_CONTENT = {
     title: "Cascadia Security Leadership Council",
     description:
       "A Seattle-area peer community for nonprofit leaders building strategies and operational playbooks for current and future cybersecurity threats.",
-    url: "https://cascadia-security-union.vercel.app/",
-    image: "https://cascadia-security-union.vercel.app/og-image.png",
+    url: "https://www.cascadiasecurity.org/",
+    image: "https://www.cascadiasecurity.org/og-image.png",
     imageAlt:
       "Cascadia Security Leadership Council — nonprofit cybersecurity strategies and playbooks",
   },
